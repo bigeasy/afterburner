@@ -10,13 +10,13 @@
                             "async", "profile", "jit"
     ],
     "author":               "Alan Gutierrez <alan@prettyrobots.com>",
-    "homepage":             "https://github.com/bigeasy/packet",
-    "bugs":                 "https://github.com/bigeasy/packet/issues",
+    "homepage":             "https://github.com/bigeasy/afterburner",
+    "bugs":                 "https://github.com/bigeasy/afterburner/issues",
     "license":              "MIT",
     "repository":
     {
                             "type": "git",
-                            "url": "http://github.com/bigeasy/packet.git"
+                            "url": "http://github.com/bigeasy/afterburner.git"
     },
     "dependencies":
     {
