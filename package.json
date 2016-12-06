@@ -1,0 +1,35 @@
+{
+    "name":                 "afterburner",
+    "version":              "9.9.9",
+    "description":
+
+      "Compile Cadence functions into JIT compiled asynchronous code.",
+
+    "keywords":
+    [
+                            "async", "profile", "jit"
+    ],
+    "author":               "Alan Gutierrez <alan@prettyrobots.com>",
+    "homepage":             "https://github.com/bigeasy/packet",
+    "bugs":                 "https://github.com/bigeasy/packet/issues",
+    "license":              "MIT",
+    "repository":
+    {
+                            "type": "git",
+                            "url": "http://github.com/bigeasy/packet.git"
+    },
+    "dependencies":
+    {
+                            "acorn":                        "4.0.3",
+                            "escodegen":                    "1.8.1"
+    },
+    "devDependencies":
+    {
+                            "proof":                        "1.2.x"
+    },
+    "main":                 "afterburner",
+    "scripts":
+    {
+                            "test": "proof platform win32 && proof test */*/*.t.js || t/test"
+    }
+}
