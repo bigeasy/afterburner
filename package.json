@@ -1,6 +1,6 @@
 {
     "name":                 "afterburner",
-    "version":              "9.9.9",
+    "version":              "0.0.0",
     "description":
 
       "Compile Cadence functions into JIT compiled asynchronous code.",
