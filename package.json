@@ -20,7 +20,7 @@
     },
     "dependencies":
     {
-                            "acorn":                        "5.0.3",
+                            "acorn":                        "5.2.1",
                             "escodegen":                    "1.8.1"
     },
     "devDependencies":
