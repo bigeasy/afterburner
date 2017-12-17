@@ -21,7 +21,7 @@
     "dependencies":
     {
                             "acorn":                        "5.2.1",
-                            "escodegen":                    "1.8.1"
+                            "escodegen":                    "1.9.0"
     },
     "devDependencies":
     {
