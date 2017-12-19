@@ -23,7 +23,28 @@ function explode (node) {
     assert(f.type == 'FunctionExpression')
     var params = f.params.slice(1)
     if (params.length != 0) {
+        for (var i = params.length - 1; i >= 0; i--) {
         // TODO Copy parameters to local variables.
+        f.body.body.unshift({
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: { type: 'Identifier', name: params[i].name },
+                init: {
+                    type: 'MemberExpression',
+                    object: {
+                        type: 'MemberExpression',
+                        object: { type: 'Identifier', name: 'self' },
+                        property: { type: 'Identifier', name: 'vargs' },
+                        computed: false
+                    },
+                    property: { type: 'Literal', value: i },
+                    computed: true
+                }
+            }],
+            kind: 'var'
+        })
+        }
     }
     // TODO Need to map `arguments` to `this.vargs`.
     return {

@@ -1,4 +1,4 @@
 var cadence = require('cadence')
-module.exports = cadence(function (async) {
-    return [ 1 ]
+module.exports = cadence(function (async, one, two) {
+    return [ one ]
 })
