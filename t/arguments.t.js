@@ -27,7 +27,6 @@ function strip (object) {
 }
 
 function prove (okay) {
-    var departure = require('departure')
     var acorn = require('acorn')
     var walk = require('acorn/dist/walk')
     var escodegen = require('escodegen')
