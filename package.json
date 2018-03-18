@@ -25,7 +25,8 @@
     },
     "devDependencies":
     {
-                            "proof":                        "3.0.x"
+                            "proof":                        "3.0.x",
+                            "hotspot":                      "0.0.1"
     },
     "main":                 "afterburner",
     "scripts":

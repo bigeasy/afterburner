@@ -1,4 +1,4 @@
-require('proof')(1, prove)
+require('proof')(2, prove)
 
 function strip (object) {
     if (object == null) {
@@ -39,4 +39,7 @@ function prove (okay) {
     okay.say(escodegen.generate(actual))
     okay.say(escodegen.generate(expected))
     okay(actual, expected, 'minimal')
+    require('./parse/minimal.out')(function (error, value) {
+        okay(value, 1, 'compiled')
+    })
 }
