@@ -30,7 +30,7 @@ var after = (function () {
     })
 
     return function (one, callback) {
-        return (new Afterburner(one)).main(callback)
+        return new Afterburner(one).main(callback)
     }
 })()
 
