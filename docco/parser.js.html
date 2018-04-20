@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>parser.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+
+
+                <a class="source" href="afterburner.js.html">
+                  afterburner.js
+                </a>
+
+
+                <a class="source" href="parser.js.html">
+                  parser.js
+                </a>
+
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    <ul class="sections">
+
+          <li id="title">
+              <div class="annotation">
+                  <h1>parser.js</h1>
+              </div>
+          </li>
+
+
+
+        <li id="section-1">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> acorn = <span class="hljs-built_in">require</span>(<span class="hljs-string">'acorn'</span>)
+<span class="hljs-keyword">var</span> _walk = <span class="hljs-built_in">require</span>(<span class="hljs-string">'acorn/dist/walk'</span>)
+<span class="hljs-keyword">var</span> escodegen = <span class="hljs-built_in">require</span>(<span class="hljs-string">'escodegen'</span>)
+<span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">'assert'</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dump</span> (<span class="hljs-params">node</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">require</span>(<span class="hljs-string">'util'</span>).inspect(node, { <span class="hljs-attr">depth</span>: <span class="hljs-literal">Infinity</span> }))
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findDeclarations</span> (<span class="hljs-params">node, declarations</span>) </span>{
+    <span class="hljs-keyword">if</span> (
+        node.type == <span class="hljs-string">'CallExpression'</span> &amp;&amp;
+        node.callee.name == <span class="hljs-string">'cadence'</span>
+    ) {
+        declarations.push(declarations)
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> findDeclarations(node, declarations)
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">explode</span> (<span class="hljs-params">node</span>) </span>{
+    <span class="hljs-keyword">var</span> f = node.arguments[<span class="hljs-number">0</span>]
+    assert(f.type == <span class="hljs-string">'FunctionExpression'</span>)
+    <span class="hljs-keyword">var</span> params = f.params.slice(<span class="hljs-number">1</span>)
+    <span class="hljs-keyword">if</span> (params.length != <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = params.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) {</pre></div></div>
+
+        </li>
+
+
+        <li id="section-2">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>TODO Copy parameters to local variables.</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>        f.body.body.unshift({
+            <span class="hljs-attr">type</span>: <span class="hljs-string">'VariableDeclaration'</span>,
+            <span class="hljs-attr">declarations</span>: [{
+                <span class="hljs-attr">type</span>: <span class="hljs-string">'VariableDeclarator'</span>,
+                <span class="hljs-attr">id</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'Identifier'</span>, <span class="hljs-attr">name</span>: params[i].name },
+                <span class="hljs-attr">init</span>: {
+                    <span class="hljs-attr">type</span>: <span class="hljs-string">'MemberExpression'</span>,
+                    <span class="hljs-attr">object</span>: {
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">'MemberExpression'</span>,
+                        <span class="hljs-attr">object</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'Identifier'</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'self'</span> },
+                        <span class="hljs-attr">property</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'Identifier'</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'vargs'</span> },
+                        <span class="hljs-attr">computed</span>: <span class="hljs-literal">false</span>
+                    },
+                    <span class="hljs-attr">property</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'Literal'</span>, <span class="hljs-attr">value</span>: i },
+                    <span class="hljs-attr">computed</span>: <span class="hljs-literal">true</span>
+                }
+            }],
+            <span class="hljs-attr">kind</span>: <span class="hljs-string">'var'</span>
+        })
+        }
+    }</pre></div></div>
+
+        </li>
+
+
+        <li id="section-3">
+            <div class="annotation">
+
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>TODO Need to map <code>arguments</code> to <code>this.vargs</code>.</p>
+
+            </div>
+
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">'CallExpression'</span>,
+        <span class="hljs-attr">callee</span>: {
+            <span class="hljs-attr">type</span>: <span class="hljs-string">'CallExpression'</span>,
+            <span class="hljs-attr">callee</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'Identifier'</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">'require'</span> },
+            <span class="hljs-string">'arguments'</span>: [{
+                <span class="hljs-attr">type</span>: <span class="hljs-string">'Literal'</span>,
+                <span class="hljs-attr">value</span>: <span class="hljs-string">'hotspot'</span>
+            }]
+        },
+        <span class="hljs-string">'arguments'</span>: [{
+            <span class="hljs-attr">type</span>: <span class="hljs-string">'FunctionExpression'</span>,
+            <span class="hljs-attr">id</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">generator</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">expression</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">params</span>: [],
+            <span class="hljs-attr">body</span>: f.body
+        }]
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">walk</span> (<span class="hljs-params">source</span>) </span>{
+    <span class="hljs-keyword">var</span> node = acorn.parse(source)
+    <span class="hljs-keyword">var</span> declarations = []
+    _walk.ancestor(node, {
+        <span class="hljs-attr">CallExpression</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">node, path</span>) </span>{
+            <span class="hljs-keyword">if</span> (node.callee.name == <span class="hljs-string">'cadence'</span>) {
+                declarations.push(path.slice().reverse()[<span class="hljs-number">1</span>])
+            }
+        }
+    })
+    declarations.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">node</span>) </span>{
+        <span class="hljs-keyword">switch</span> (node.type) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">'AssignmentExpression'</span>:
+            node.right = explode(node.right)
+            <span class="hljs-keyword">break</span>
+        }
+    })
+    <span class="hljs-keyword">return</span> node
+}
+
+exports.walk = walk</pre></div></div>
+
+        </li>
+
+    </ul>
+  </div>
+</body>
+</html>
